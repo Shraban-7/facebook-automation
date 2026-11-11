@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\FacebookPage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,11 +37,46 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        /** @var User|null $user */
+        $user = $request->user();
+        $activePage = $user?->resolveCurrentPage();
+
+        $connectedPages = $user !== null
+            ? $user->facebookPages()
+                ->orderBy('name')
+                ->get()
+                ->map(fn (FacebookPage $page): array => [
+                    'id' => $page->id,
+                    'page_id' => $page->page_id,
+                    'name' => $page->name,
+                    'category' => $page->category,
+                    'avatar_url' => $page->avatar_url,
+                    'status' => $page->status,
+                    'followers_count' => $page->followers_count,
+                ])->all()
+            : [];
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+            ],
+            'facebookWorkspace' => [
+                'connectedPages' => $connectedPages,
+                'activePage' => $activePage ? [
+                    'id' => $activePage->id,
+                    'page_id' => $activePage->page_id,
+                    'name' => $activePage->name,
+                    'category' => $activePage->category,
+                    'avatar_url' => $activePage->avatar_url,
+                    'status' => $activePage->status,
+                    'followers_count' => $activePage->followers_count,
+                ] : null,
+            ],
+            'flash' => [
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

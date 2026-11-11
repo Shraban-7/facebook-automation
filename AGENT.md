@@ -3,7 +3,7 @@ You are a senior full-stack engineer. Build a Facebook Page automation tool usin
 ## Tech stack
 - Backend: Laravel 11 (PHP 8.3), MySQL, Redis (queues + cache), Laravel Horizon
 - Frontend: Inertia.js + Vue 3 (Composition API, TypeScript), Tailwind CSS
-- Auth: Laravel Breeze/Sanctum, with Facebook Login (OAuth) to connect Pages
+- Auth: Custom Auth, with Facebook Login (OAuth) to connect Pages
 
 ## Core features
 1. Page connection
