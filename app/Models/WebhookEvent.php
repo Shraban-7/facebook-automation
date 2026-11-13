@@ -31,4 +31,12 @@ class WebhookEvent extends Model
     {
         return $this->belongsTo(FacebookPage::class);
     }
+
+    /**
+     * @return BelongsTo<SocialAccount, $this>
+     */
+    public function socialAccount(): BelongsTo
+    {
+        return $this->belongsTo(SocialAccount::class);
+    }
 }

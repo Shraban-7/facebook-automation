@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Services\Facebook\DemoWorkspaceSeederService;
+use App\Services\Social\MultiPlatformSeederService;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,8 +12,10 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(DemoWorkspaceSeederService $demoSeeder): void
-    {
+    public function run(
+        DemoWorkspaceSeederService $demoSeeder,
+        MultiPlatformSeederService $multiPlatformSeeder,
+    ): void {
         $user = User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
@@ -23,5 +26,6 @@ class DatabaseSeeder extends Seeder
         );
 
         $demoSeeder->seedForUser($user);
+        $multiPlatformSeeder->seedWorkspaceForUser($user);
     }
 }

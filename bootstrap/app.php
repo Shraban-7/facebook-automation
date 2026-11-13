@@ -19,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->validateCsrfTokens(except: [
-            'api/webhooks/facebook',
+            'api/webhooks/*',
+            'api/compliance/*',
             'webhooks/facebook',
         ]);
 

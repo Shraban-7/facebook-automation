@@ -6,9 +6,14 @@ import {
     CheckCircle2,
     ChevronDown,
     Flag,
+    Globe2,
+    Inbox,
     LayoutGrid,
     MessageSquareReply,
+    PenSquare,
+    ShieldAlert,
     Sparkles,
+    Users,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import {
@@ -63,6 +68,36 @@ const mainNavItems: NavItem[] = [
         title: 'Activity & Webhooks',
         href: '/facebook/activity-logs',
         icon: Activity,
+    },
+    {
+        title: 'Social Accounts',
+        href: '/social/accounts',
+        icon: Globe2,
+    },
+    {
+        title: 'Unified Composer',
+        href: '/social/composer',
+        icon: PenSquare,
+    },
+    {
+        title: 'Unified Inbox',
+        href: '/social/inbox',
+        icon: Inbox,
+    },
+    {
+        title: 'Social Analytics',
+        href: '/social/analytics',
+        icon: BarChart3,
+    },
+    {
+        title: 'Operations & Health',
+        href: '/social/operations',
+        icon: ShieldAlert,
+    },
+    {
+        title: 'Workspace Team',
+        href: '/settings/workspace',
+        icon: Users,
     },
 ];
 

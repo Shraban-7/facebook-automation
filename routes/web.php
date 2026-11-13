@@ -6,6 +6,11 @@ use App\Http\Controllers\Facebook\AutoReplyRuleController;
 use App\Http\Controllers\Facebook\DashboardController;
 use App\Http\Controllers\Facebook\FacebookPageController;
 use App\Http\Controllers\Facebook\PostSchedulerController;
+use App\Http\Controllers\Social\ComposerController;
+use App\Http\Controllers\Social\InboxController;
+use App\Http\Controllers\Social\SocialAccountController;
+use App\Http\Controllers\Social\SocialAnalyticsController;
+use App\Http\Controllers\Social\WorkspaceController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
@@ -49,6 +54,34 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // 5. Activity Logs, Webhook Inspector & Rate Limits
         Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
     });
+
+    // Multi-Platform Social Studio
+    Route::prefix('social')->name('social.')->group(function () {
+        Route::get('accounts', [SocialAccountController::class, 'index'])->name('accounts.index');
+        Route::get('accounts/oauth/{provider}/redirect', [SocialAccountController::class, 'redirect'])->name('accounts.redirect');
+        Route::get('accounts/oauth/{provider}/callback', [SocialAccountController::class, 'callback'])->name('accounts.callback');
+        Route::post('accounts/sandbox', [SocialAccountController::class, 'connectSandbox'])->name('accounts.sandbox');
+        Route::delete('accounts/{account}', [SocialAccountController::class, 'destroy'])->name('accounts.destroy');
+
+        Route::get('composer', [ComposerController::class, 'index'])->name('composer.index');
+        Route::post('composer', [ComposerController::class, 'store'])->name('composer.store');
+        Route::post('composer/{content}/approve', [ComposerController::class, 'approve'])->name('composer.approve');
+        Route::delete('composer/{content}', [ComposerController::class, 'destroy'])->name('composer.destroy');
+
+        Route::get('inbox', [InboxController::class, 'index'])->name('inbox.index');
+        Route::post('inbox/conversations/{conversation}/reply', [InboxController::class, 'reply'])->name('inbox.reply');
+        Route::post('inbox/comments/{comment}/toggle-hide', [InboxController::class, 'toggleHideComment'])->name('inbox.comments.toggle-hide');
+
+        Route::get('analytics', [SocialAnalyticsController::class, 'index'])->name('analytics.index');
+        Route::get('analytics/export', [SocialAnalyticsController::class, 'export'])->name('analytics.export');
+
+        Route::get('operations', [WorkspaceController::class, 'operations'])->name('operations.index');
+    });
+
+    Route::post('workspaces/{workspace}/switch', [WorkspaceController::class, 'switch'])->name('workspaces.switch');
+    Route::get('settings/workspace', [WorkspaceController::class, 'settings'])->name('settings.workspace');
+    Route::post('settings/workspace/members', [WorkspaceController::class, 'addMember'])->name('settings.workspace.members.store');
+    Route::delete('settings/workspace/members/{member}', [WorkspaceController::class, 'removeMember'])->name('settings.workspace.members.destroy');
 });
 
 require __DIR__.'/settings.php';

@@ -56,11 +56,35 @@ class HandleInertiaRequests extends Middleware
                 ])->all()
             : [];
 
+        $currentWorkspace = $user !== null
+            ? ($user->activeWorkspace()->first() ?? $user->workspaces()->orderBy('workspaces.id')->first())
+            : null;
+        $workspaces = $user !== null
+            ? $user->workspaces()
+                ->orderBy('name')
+                ->get(['workspaces.id', 'workspaces.name', 'workspaces.slug', 'workspaces.plan'])
+                ->map(fn ($ws): array => [
+                    'id' => $ws->id,
+                    'name' => $ws->name,
+                    'slug' => $ws->slug,
+                    'plan' => $ws->plan,
+                ])->all()
+            : [];
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $user,
+            ],
+            'socialWorkspace' => [
+                'current' => $currentWorkspace ? [
+                    'id' => $currentWorkspace->id,
+                    'name' => $currentWorkspace->name,
+                    'slug' => $currentWorkspace->slug,
+                    'plan' => $currentWorkspace->plan,
+                ] : null,
+                'workspaces' => $workspaces,
             ],
             'facebookWorkspace' => [
                 'connectedPages' => $connectedPages,
@@ -75,6 +99,7 @@ class HandleInertiaRequests extends Middleware
                 ] : null,
             ],
             'flash' => [
+                'status' => $request->session()->get('status'),
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),
             ],

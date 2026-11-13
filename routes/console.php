@@ -19,3 +19,19 @@ Schedule::command('facebook:sync-insights --days=30')
 Schedule::command('facebook:refresh-tokens')
     ->daily()
     ->withoutOverlapping();
+
+Schedule::command('social:sweep-due-targets')
+    ->everyMinute()
+    ->withoutOverlapping();
+
+Schedule::command('social:refresh-tokens')
+    ->hourly()
+    ->withoutOverlapping();
+
+Schedule::command('social:pull-metrics --days=7')
+    ->everyFourHours()
+    ->withoutOverlapping();
+
+Schedule::command('social:prune')
+    ->dailyAt('02:30')
+    ->withoutOverlapping();
