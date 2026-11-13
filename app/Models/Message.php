@@ -2,51 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
 
-/**
- * @property int $id
- * @property int $facebook_page_id
- * @property int|null $auto_reply_rule_id
- * @property string $channel
- * @property string $direction
- * @property string|null $external_id
- * @property string|null $parent_external_id
- * @property string $sender_id
- * @property string|null $sender_name
- * @property string|null $recipient_id
- * @property string|null $message_text
- * @property string|null $reply_text
- * @property bool $is_hidden
- * @property string $status
- * @property Carbon|null $last_user_interaction_at
- * @property Carbon|null $replied_at
- * @property string|null $error_message
- * @property array<string, mixed>|null $metadata
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- */
-#[Fillable([
-    'facebook_page_id',
-    'auto_reply_rule_id',
-    'channel',
-    'direction',
-    'external_id',
-    'parent_external_id',
-    'sender_id',
-    'sender_name',
-    'recipient_id',
-    'message_text',
-    'reply_text',
-    'is_hidden',
-    'status',
-    'last_user_interaction_at',
-    'replied_at',
-    'error_message',
-    'metadata',
+#[Guarded([
+    'id',
 ])]
 class Message extends Model
 {

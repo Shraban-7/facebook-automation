@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,49 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 
-/**
- * @property int $id
- * @property int $user_id
- * @property string $page_id
- * @property string $name
- * @property string|null $category
- * @property string|null $avatar_url
- * @property int $followers_count
- * @property string $access_token
- * @property string|null $user_access_token
- * @property Carbon|null $token_expires_at
- * @property Carbon|null $token_last_refreshed_at
- * @property array<int, string>|null $permissions
- * @property array<int, string>|null $tasks
- * @property bool $webhook_subscribed
- * @property string $status
- * @property int|null $last_error_code
- * @property string|null $last_error_message
- * @property Carbon|null $last_synced_at
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- */
-#[Fillable([
-    'user_id',
-    'page_id',
-    'name',
-    'category',
-    'avatar_url',
-    'followers_count',
-    'access_token',
-    'user_access_token',
-    'token_expires_at',
-    'token_last_refreshed_at',
-    'permissions',
-    'tasks',
-    'webhook_subscribed',
-    'status',
-    'last_error_code',
-    'last_error_message',
-    'last_synced_at',
+#[Guarded([
+    'id',
 ])]
 #[Hidden([
     'access_token',

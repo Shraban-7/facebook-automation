@@ -2,48 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 
-/**
- * @property int $id
- * @property int $user_id
- * @property int $facebook_page_id
- * @property string|null $facebook_post_id
- * @property string $type
- * @property string $content
- * @property array<int, string>|null $media_urls
- * @property string|null $link_url
- * @property string|null $link_title
- * @property string $status
- * @property Carbon|null $published_at
- * @property string|null $permalink_url
- * @property array<string, int|float>|null $metrics
- * @property string|null $last_error
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- */
-#[Fillable([
-    'user_id',
-    'facebook_page_id',
-    'facebook_post_id',
-    'type',
-    'content',
-    'media_urls',
-    'link_url',
-    'link_title',
-    'status',
-    'published_at',
-    'permalink_url',
-    'metrics',
-    'last_error',
+#[Guarded([
+    'id',
 ])]
 class Post extends Model
 {

@@ -2,51 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
 
-/**
- * @property int $id
- * @property int $post_id
- * @property int $facebook_page_id
- * @property int $user_id
- * @property Carbon $scheduled_for
- * @property string $timezone
- * @property string $status
- * @property int $attempts
- * @property int $max_attempts
- * @property Carbon|null $last_attempted_at
- * @property Carbon|null $next_retry_at
- * @property Carbon|null $published_at
- * @property string|null $facebook_post_id
- * @property int|null $error_code
- * @property string|null $error_message
- * @property array<int, array<string, mixed>>|null $failure_log
- * @property string $idempotency_key
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- */
-#[Fillable([
+#[Guarded([
     'post_id',
-    'facebook_page_id',
-    'user_id',
-    'scheduled_for',
-    'timezone',
-    'status',
-    'attempts',
-    'max_attempts',
-    'last_attempted_at',
-    'next_retry_at',
-    'published_at',
-    'facebook_post_id',
-    'error_code',
-    'error_message',
-    'failure_log',
-    'idempotency_key',
 ])]
 class ScheduledPost extends Model
 {
