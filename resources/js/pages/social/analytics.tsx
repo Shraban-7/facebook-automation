@@ -3,8 +3,6 @@ import { Download } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem } from '@/types';
 
 interface Props {
     days: number;
@@ -19,18 +17,13 @@ interface Props {
     byProvider: Array<{ provider: string; impressions: number; engagements: number }>;
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Multi-Platform Studio', href: '/social/accounts' },
-    { title: 'Social Analytics', href: '/social/analytics' },
-];
-
 export default function SocialAnalyticsPage({ days, providerFilter, totals, series, byProvider }: Props) {
     const updateFilter = (nextDays: number, nextProvider: string) => {
         router.get('/social/analytics', { days: nextDays, provider: nextProvider }, { preserveState: true });
     };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
             <Head title="Social Analytics" />
 
             <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
@@ -134,6 +127,6 @@ export default function SocialAnalyticsPage({ days, providerFilter, totals, seri
                     </Card>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

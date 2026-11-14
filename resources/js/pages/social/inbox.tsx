@@ -5,8 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem } from '@/types';
 
 interface ConversationItem {
     id: number;
@@ -41,11 +39,6 @@ interface Props {
     comments: CommentItem[];
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Multi-Platform Studio', href: '/social/accounts' },
-    { title: 'Unified Inbox', href: '/social/inbox' },
-];
-
 export default function UnifiedInboxPage({ conversations, comments }: Props) {
     const [activeConvId, setActiveConvId] = useState<number | null>(conversations[0]?.id ?? null);
     const activeConv = conversations.find((c) => c.id === activeConvId) ?? conversations[0] ?? null;
@@ -67,7 +60,7 @@ export default function UnifiedInboxPage({ conversations, comments }: Props) {
     };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
             <Head title="Unified Inbox" />
 
             <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
@@ -183,6 +176,6 @@ export default function UnifiedInboxPage({ conversations, comments }: Props) {
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </>
     );
 }

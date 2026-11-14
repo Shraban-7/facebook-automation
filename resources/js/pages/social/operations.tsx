@@ -2,8 +2,6 @@ import { Head } from '@inertiajs/react';
 import { Activity, ShieldAlert } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem } from '@/types';
 
 interface Props {
     providerHealth: Array<{
@@ -32,14 +30,9 @@ interface Props {
     }>;
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Multi-Platform Studio', href: '/social/accounts' },
-    { title: 'Operations & Health', href: '/social/operations' },
-];
-
 export default function OperationsPage({ providerHealth, attempts, webhooks }: Props) {
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
             <Head title="Operations & Health" />
 
             <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
@@ -124,6 +117,6 @@ export default function OperationsPage({ providerHealth, attempts, webhooks }: P
                     </Card>
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }

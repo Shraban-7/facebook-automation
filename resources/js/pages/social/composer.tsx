@@ -6,19 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, ContentItem, SocialAccountSummary } from '@/types';
+import type { ContentItem, SocialAccountSummary } from '@/types';
 
 interface Props {
     accounts: SocialAccountSummary[];
     contents: ContentItem[];
     canPublish: boolean;
 }
-
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Multi-Platform Studio', href: '/social/accounts' },
-    { title: 'Unified Composer', href: '/social/composer' },
-];
 
 export default function UnifiedComposerPage({ accounts, contents, canPublish }: Props) {
     const [selectedAccountIds, setSelectedAccountIds] = useState<number[]>(
@@ -81,7 +75,7 @@ export default function UnifiedComposerPage({ accounts, contents, canPublish }: 
     const charCount = form.data.body.length;
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
             <Head title="Unified Composer" />
 
             <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
@@ -277,6 +271,6 @@ export default function UnifiedComposerPage({ accounts, contents, canPublish }: 
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </>
     );
 }

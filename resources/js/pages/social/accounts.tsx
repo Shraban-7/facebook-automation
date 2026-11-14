@@ -5,8 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import AppLayout from '@/layouts/app-layout';
-import type { BreadcrumbItem, ProviderCapabilities, SocialAccountSummary } from '@/types';
+import type { ProviderCapabilities, SocialAccountSummary } from '@/types';
 
 interface ProviderCatalogItem {
     key: string;
@@ -20,11 +19,6 @@ interface Props {
     providerCatalog: ProviderCatalogItem[];
     canManageAccounts: boolean;
 }
-
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Multi-Platform Studio', href: '/social/accounts' },
-    { title: 'Connected Accounts', href: '/social/accounts' },
-];
 
 export default function SocialAccountsPage({ accounts, providerCatalog, canManageAccounts }: Props) {
     const sandboxForm = useForm({
@@ -46,7 +40,7 @@ export default function SocialAccountsPage({ accounts, providerCatalog, canManag
     };
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
+        <>
             <Head title="Social Accounts" />
 
             <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
@@ -211,6 +205,6 @@ export default function SocialAccountsPage({ accounts, providerCatalog, canManag
                     </CardContent>
                 </Card>
             </div>
-        </AppLayout>
+        </>
     );
 }
