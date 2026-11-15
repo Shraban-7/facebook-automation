@@ -130,6 +130,14 @@ class SocialAccountController extends Controller
         $workspace = $user->resolveCurrentWorkspace();
         Gate::authorize('create', [SocialAccount::class, $workspace]);
 
+        if ($request->filled('error')) {
+            $reason = (string) ($request->query('error_description')
+                ?? $request->query('error_message')
+                ?? $request->query('error', 'OAuth authorization was cancelled.'));
+
+            return redirect()->route('social.accounts.index')->with('error', $reason);
+        }
+
         $authState = new AuthState(
             state: (string) $stored['state'],
             workspaceId: (int) $stored['workspace_id'],
@@ -139,7 +147,16 @@ class SocialAccountController extends Controller
             codeVerifier: $stored['code_verifier'] ?? null,
         );
 
-        $result = $providers->provider($provider)->handleCallback($request->query(), $authState);
+        try {
+            $result = $providers->provider($provider)->handleCallback($request->query(), $authState);
+        } catch (\Throwable $e) {
+            return redirect()->route('social.accounts.index')->with('error', $e->getMessage());
+        }
+
+        if ($result->accounts === []) {
+            return redirect()->route('social.accounts.index')
+                ->with('error', 'No accounts were returned by '.ucfirst($provider).'. Ensure your account has at least one managed Page/Channel and all requested permissions were granted.');
+        }
 
         foreach ($result->accounts as $discovered) {
             $connectAccount->handle($workspace, $provider, $discovered);
