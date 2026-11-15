@@ -12,12 +12,23 @@ use App\Http\Controllers\Social\SocialAccountController;
 use App\Http\Controllers\Social\SocialAnalyticsController;
 use App\Http\Controllers\Social\WorkspaceController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return auth()->check()
         ? redirect()->route('dashboard')
         : redirect()->route('login');
 })->name('home');
+
+Route::get('privacy-policy', fn () => Inertia::render('legal/privacy-policy'))
+    ->name('privacy-policy');
+
+Route::get('data-deletion', fn () => Inertia::render('legal/data-deletion'))
+    ->name('data-deletion');
+
+Route::get('compliance/deletion-status/{code}', fn (string $code) => Inertia::render('legal/data-deletion', [
+    'confirmationCode' => $code,
+]))->name('compliance.deletion-status');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');

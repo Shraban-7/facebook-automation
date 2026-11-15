@@ -26,6 +26,12 @@ return [
 
     'oauth_base_url' => env('FACEBOOK_OAUTH_BASE_URL', 'https://www.facebook.com'),
 
+    'privacy_policy_url' => env('FACEBOOK_PRIVACY_POLICY_URL', env('APP_URL', 'http://localhost:8000').'/privacy-policy'),
+
+    'data_deletion_url' => env('FACEBOOK_DATA_DELETION_URL', env('APP_URL', 'http://localhost:8000').'/data-deletion'),
+
+    'data_deletion_callback_url' => env('FACEBOOK_DATA_DELETION_CALLBACK_URL', env('APP_URL', 'http://localhost:8000').'/api/compliance/meta/data-deletion'),
+
     /*
     |--------------------------------------------------------------------------
     | Required OAuth Scopes (Minimal Privilege Principle)
